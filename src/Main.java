@@ -24,9 +24,11 @@ public class Main {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter("journal.txt", true));
-            writer.append("");
+            writer.append(String.format("%.2f",data.getBmi())+"\n" + data.getNow()+"\n");
+            writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

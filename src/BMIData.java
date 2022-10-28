@@ -10,6 +10,10 @@ public class BMIData {
     private double bmi;
     private LocalDate now;
 
+    public BMIData(double bmi, LocalDate now){
+        this.bmi = bmi;
+        this.now = now;
+    }
     public BMIData(double weight, double height, int age){
         Date date = new Date();
 
@@ -27,6 +31,21 @@ public class BMIData {
 
     public void calculateBMI(){
         this.bmi = this.weight/(this.height*this.height);
+    }
+    public String isWeightCorect(){
+        if (bmi == 0) {
+            return "Enter your details";
+        } else if (bmi < 18.5) {
+            return "You are underweight";
+        } else if (bmi < 25) {
+            return "You are a healthy weight";
+        } else if (bmi < 30) {
+            return "You are overweight";
+        } else if (bmi < 40) {
+            return "You are obese";
+        } else {
+            return "You are severely obese";
+        }
     }
 
     public double getWeight(){

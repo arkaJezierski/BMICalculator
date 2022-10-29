@@ -16,6 +16,7 @@ public class Main {
 
         while (true){
             System.out.println("1.Add new value");
+            System.out.println("2.Is you weight correct?");
             System.out.println("9.Quit");
             System.out.println("Choose your option:");
 
@@ -28,9 +29,7 @@ public class Main {
                     if(isDayExist(allData)){
                         allData.remove(allData.size()-1);
                     }
-                    addValue(data);
-                    allData.add(new BMIData(data.getBmi(), data.getNow()));
-
+                    allData.add(data);
                     break;
                 case 2:
                     if (data != null)
@@ -41,6 +40,7 @@ public class Main {
                 case 3:
                     break;
                 case 9:
+                    addValue(allData);
                     System.exit(0);
                     break;
 
@@ -52,18 +52,21 @@ public class Main {
 
 
     }
-    public static void addValue(BMIData data){
+    // Open file and write value
+    public static void addValue(List<BMIData> db){
         BufferedWriter writer;
 
         try {
-            writer = new BufferedWriter(new FileWriter("journal.txt", true));
-            writer.append(String.format("%.2f",data.getBmi())+"\n" + data.getNow()+"\n");
+            writer = new BufferedWriter(new FileWriter("journal.txt", false));
+            for(BMIData data: db){
+                writer.append(String.format("%.2f",data.getBmi())+"\n" + data.getNow()+"\n");
+            }
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
+    //Open file, scan all data and save it in List
     public static void getData(List<BMIData> db){
         try {
             File read = new File("journal.txt");
@@ -76,6 +79,7 @@ public class Main {
         }
 
     }
+    //Find out if you added data today
     public static boolean isDayExist(List<BMIData> db){
         for(BMIData x: db){
             if (x.getNow() == LocalDate.now()){
